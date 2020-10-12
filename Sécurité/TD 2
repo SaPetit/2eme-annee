@@ -1,0 +1,29 @@
+TP2 sécurité.
+
+
+1) Les fonctions de hachage permettent de construire des clés hierarchiques.
+Essayez de généraliser le schéma lorsque les niveaux de sécurité admettent un ordre partiel
+(certains niveaux ne peuvent pas être comparés)
+
+2) Alice part en conférence à l’étranger et veut se connecter à l’INRIA pendant son séjour.
+L’INRIA exige qu’Alice utilise un nouveau password à chaque nouvelle connexion.
+Avant de partir, Alice choisit un nombre aléatoire w et hache cette valeur t+1 fois
+afin d’obtenir une valeur qu’elle donne au système. 
+Elle garde tous les hachés sur une clé USB qu’elle emporte à la conférence avec elle.
+Sur le lieu de la conférence, Elle décide de se connecter,
+proposez un protocole qui lui permette de se connecter t fois avec à chaque fois un nouveau password.
+
+Solution SKey.
+Avant de partir alice donne a L’INRIA h(w_t)=w_t+1
+Pour sa premiere connection Alice donne m = w_t en clair.
+De son coté L’INRIA applique h à ce qu'alice a envoyé
+et accorde la connection si h(m) = w_t+1 et stock ("Alice", w_t).
+Pour la seconde connection alice donne ("Alice", w_t-1) l'INRIA calcul h(w_t-1) si h(w_t-1) = w_t alors
+Connection accordé et stockage de ("Alice, w_t-1).
+
+Interet d'un certificat : Assurer la propriété d'une clé publique d'un individu.
+
+Courbe eliptique : Rapport Sécurité/Taille de clé trèq interessant.
+
+partage d'une clé secrete de 300 bits. Clé secrete donc chripto symetrique.
+AES-CBC  avec des clés de session H_256(K,i) avec i l'identifiant de session.
