@@ -33,4 +33,4 @@ Bob verifie de x = g^v.u^z mod p
 Passage de secret : fragmentation d'un secret en N fragments
 de façon à ce que t fragments soient necessaire pour le reconstruire
 Passage de Shamir.
-Utilisation du l'interpolation.
+Utilisation du l'interpolation de Laplace.
