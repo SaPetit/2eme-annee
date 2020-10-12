@@ -1,0 +1,36 @@
+Cours de sécurité 
+Voir cours de Dan Bonney.
+(revoir el gamal symetrique ou non)
+
+
+Diffie Elman
+
+Alice choisie a dans Zp
+Bob choisie b dans Zp
+g est une clé publique
+
+A - g^a -> Bob.
+A <- g^b - Bob.
+
+g^(ba) devient une clé secrete entre Alice et Bob.
+
+Résumé :
+Le chiffrement Doit être probabiliste.
+
+Fonction Caméléon : fonction de hashage "à trappe".
+Connaissance particulière sur la fonction de hashage qui permet
+de trouver des collision particulières.
+
+Identification de Schnorr : P veut prouver qu'il connais un secret,
+sans pour autant révéler ce secret.
+
+Bob connais a, u=g^a étant une clé publique.
+Iwan tire au sort r et envoie x= g^r à Bob.
+Bob tire au sort z dans Zq et l'envoie à Iwan.
+Iwan calcul v = r - a.z et envoie v à Bob.
+Bob verifie de x = g^v.u^z mod p
+
+Passage de secret : fragmentation d'un secret en N fragments
+de façon à ce que t fragments soient necessaire pour le reconstruire
+Passage de Shamir.
+Utilisation du l'interpolation.
