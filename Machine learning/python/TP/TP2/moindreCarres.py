@@ -1,5 +1,6 @@
 #Algorithme Régression linéaire par moindres carrés
 
+from re import X
 import numpy as np
 import pylab as pl
 import matplotlib.pyplot as mp
@@ -10,13 +11,14 @@ import numpy as np
 data = np.loadtxt('http://stephane.ayache.perso.luminy.univ-amu.fr/zoom/cours/Cours/AAuto/dataRegLin2D.txt')
 
 def regLin(x,y):
-    ones = np.ones(np.shape(x[0]),1)
+    ones = np.ones_like(x[0])
+    np.c_[ones,X]
     xt = np.transpose(x)
     xtx = np.dot(xt,x)
     inv = np.linalg.inv(xtx)
     xty = np.dot(xt,y)
     return np.dot(inv,xty)
 
-test = regLin(data[:,[0,1]],data[:,-1])
+test = regLin(data[:,0:1],data[:,-1])
 
 print(test)
