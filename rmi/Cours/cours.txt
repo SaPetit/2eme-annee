@@ -1,0 +1,21 @@
+Appel en retour. (Callback)
+
+Probleme : en rmi tous les appels aux méthodes distantes sont synchrones.
+(du fait de l'utilisation de sockets TCP).
+
+Solution : L'utilisation de Callback
+
+Principe : Le client appelle une méthode distante d'un objet serveur.
+La méthode distante appelée termine rapidement pour pouvoir liberer le client.
+Si le client souhaite le résultat il faut un objet coté client
+pour que le serveur puisse lui indiquer la fin de la méthode et lui transmettre le résultat.
+
+Etapes :
+0 - Le client crée son objet distant "recepteur" doté d'une méthode "transmettre". 
+1 - Le client appel la méthode "calcul" de l'objet serveur en mettant en parametre la référence de l'objet "recepteur".
+2 - Dans la méthode "calcul", création d'un thread "start" chargé d'effectuer le vrai calcul.
+3 - Fin de la méthode "calcul" ce qui libère le client.
+4 - Le thread effectue le calcul.
+5 - Le thread envoie le résultat en appelant la méthode "transmettre" sur "recepteur" coté client.
+6 - Fin de la méthode transmettre, fin du thread.
+           
