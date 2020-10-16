@@ -11,13 +11,16 @@ data = np.loadtxt('http://stephane.ayache.perso.luminy.univ-amu.fr/zoom/cours/Co
 
 def regLin(x,y):
     #ones = np.ones_like(x[0])
-    x = np.c_[np.ones(x.shape[0]),x]
+    x = np.c_[x,np.ones(x.shape[0])]
     xt = np.transpose(x)
     xtx = np.dot(xt,x)
     inv = np.linalg.inv(xtx)
     xty = np.dot(xt,y)
     return np.dot(inv,xty)
 
-test = regLin(data[:,0:1],data[:,-1])
+test = regLin(data[:,1:2],data[:,-1])
 
 print(test)
+
+
+

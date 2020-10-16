@@ -1,0 +1,13 @@
+Exercice 4.Tchat (version centralisée, en Java RMI)
+L’objectif est de concevoir une application de Tchat basée sur un intergiciel orienté objet, ici JavaRMI.
+Une version simple consiste à avoir un serveur qui reçoit chaque message et le fait suivre aux autres clients.
+On obtient donc une architecture centralisée ("en étoile", avec le serveur au centre).
+Dans cette version, le serveur de Tchat enregistre et désenregistre des clients distants.
+C’est aussi luiqui fait suivre les messages envoyés par les clients à tous les autres clients.
+En ce qui concerne un client, il peut s’enregistrer et se désenregistrer du serveur de Tchat.
+Lors de sonenregistrement, il indique son pseudo (nom de l’utilisateur).
+Il peut afficher un message reçu et demanderau serveur de Tchat d’envoyer un message à tout le monde.
+Remarque : n’utilisez pas de callback (pas d’appels en retour).
+
+
+ServeurTchatInterface
