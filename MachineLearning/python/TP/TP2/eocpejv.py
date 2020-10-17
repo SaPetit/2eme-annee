@@ -1,24 +1,20 @@
-from logging import fatal
-from operator import truediv
 from matplotlib.pyplot import plot
 import numpy as np
 import pylab as pl
 import matplotlib.pyplot as mp
+from sklearn.linear_model import LinearRegression
 from FonctionTP2 import *
 
 data = np.loadtxt('http://stephane.ayache.perso.luminy.univ-amu.fr/zoom/cours/Cours/AAuto/dataRegLin2D.txt')
-## Inplementation de l'algoritme permettant de recuperer la régression à partir d'une liste de données (x_i,y_i)
 
-# def regLin(x,y):
+X = data[:,0:2]
+Y = data[:,-1]
 
-#     x = np.c_[x,np.ones(x.shape[0])]
-#     xt = np.transpose(x)
-#     xtx = np.dot(xt,x)
-#     inv = np.linalg.inv(xtx)
-#     xty = np.dot(xt,y)
-#     return np.dot(inv,xty)
+reg = LinearRegression().fit(X, Y)
 
 
-print(regLin(data[:,0:1],data[:,-1]))
-graphRegLin(data[:,0:1],data[:,-1],-3,3)
-
+print("\n\n\n")
+#print(X)
+print(regLin(X,Y))
+print("\n\n\n")
+graphRegLin(X,Y)
