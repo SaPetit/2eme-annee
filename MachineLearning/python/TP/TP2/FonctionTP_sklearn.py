@@ -2,7 +2,8 @@
 
 from matplotlib.pyplot import subplot
 from matplotlib import cm
-from sklearn import linear_model
+from sklearn import linear_model, datasets
+from sklearn.metrics import mean_squared_error, r2_score
 import numpy as np
 from numpy.core.multiarray import result_type
 import pylab as pl
@@ -10,6 +11,21 @@ import matplotlib.pyplot as mp
 import math
 
 ## Inplementation de l'algoritme permettant de recuperer la régression à partir d'une liste de données (x_i,y_i)
+
+def prediction(model, ensemble):
+    """
+    Renvoie un ensemble de valeurs prédites pour l'ensemble donné par le model donné.
+    """
+    result = model.predict(ensemble)
+    return result
+
+def erreurSkl(valeursReelles , valeursPredites):
+    """
+    Renvoie l'erreur mse du model étant donnés un ensemble de valeurs prédites et un ensemble de valeur réelles.
+
+    """
+    result = mean_squared_error(valeursReelles , valeursPredites)
+    return result
 
 def planEnFonctionVecteurPonderation(sub_plot,W, zOrder = 0):
     """
@@ -57,7 +73,7 @@ def rss(vecteurPonderation, X, Y):
 
 def mse(vecteurPonderation, X, Y):
     """
-    Calcul la moyenne des moindres carrée (mean-square error).
+    Calcul skl la moyenne des moindres carrée (mean-square error).
     ensemble de données X de valeurs Y
     """
     resultat = rss(vecteurPonderation, X, Y)/ X.shape[0]
@@ -69,15 +85,13 @@ def rmse(vecteurPonderation, X, Y):
 
 def regLin(x,y):
     """
-    Regression Linéaire avec biais.
+    Regression Linéaire sklearn.
     ensemble de données x de valeurs y
     """
-    x = np.c_[x,np.ones(x.shape[0])]
-    xt = np.transpose(x)
-    xtx = np.dot(xt,x)
-    inv = np.linalg.inv(xtx)
-    xty = np.dot(xt,y)
-    return np.dot(inv,xty)
+    reg = linear_model.LinearRegression()
+    reg.fit(x,y)
+    result = np.concatenate([reg.coef_, [reg.intercept_]])
+    return result
 
 def graphRegLin2d(x,y,a=-5,b=5, imprimer = False, afficherDroite = False, afficherNuageDePoints = False, afficherErreur = False, Tout = False):
     """
@@ -90,7 +104,7 @@ def graphRegLin2d(x,y,a=-5,b=5, imprimer = False, afficherDroite = False, affich
 
     if afficherNuageDePoints: pl.scatter(x[:, 0], y)
     if afficherDroite : pl.plot([a, b],[reg[1] + a*reg[0], reg[1] + b*reg[0]],'r--', lw=2)
-    if afficherErreur : print(mse(reg,x,y)) 
+    #if afficherErreur : print(mse(reg,x,y)) 
     if imprimer: pl.show()
 
 def graphRegLin3d(x,y,a=-5,b=5, imprimer = False, afficherDroite = False, afficherNuageDePoints = False, afficherErreur = False):
@@ -108,7 +122,7 @@ def graphRegLin3d(x,y,a=-5,b=5, imprimer = False, afficherDroite = False, affich
     regressionLineaire = regLin(x,y)
     if afficherNuageDePoints: ax.scatter(x[:,0], x[:,1], y, s=50 )
     if afficherDroite :planEnFonctionVecteurPonderation(ax, regressionLineaire, zOrder = 2)
-    if afficherErreur : print(mse(regressionLineaire,x,y)) 
+    #if afficherErreur : print(mse(regressionLineaire,x,y)) 
     if imprimer: pl.show()
 
 def graphRegLin(x,y, a=-5,b=-5,imprimer = False, afficherDroite = False, afficherNuageDePoints = False, afficherErreur = False, Tout = False):
@@ -116,6 +130,8 @@ def graphRegLin(x,y, a=-5,b=-5,imprimer = False, afficherDroite = False, affiche
     if x.shape[1] == 1:graphRegLin2d(x,y,a=a,b=b, imprimer = imprimer, afficherDroite = afficherDroite, afficherNuageDePoints = afficherNuageDePoints, afficherErreur = afficherErreur)
     if x.shape[1] == 2:graphRegLin3d(x,y, imprimer = imprimer, afficherDroite = afficherDroite, afficherNuageDePoints = afficherNuageDePoints, afficherErreur = afficherNuageDePoints)
 
+def regressionLineaireSkLearn():
+    reg = linear_model.LinearRegression
 
 
 
