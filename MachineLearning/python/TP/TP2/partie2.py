@@ -7,7 +7,8 @@ import sklearn
 from FonctionTP_sklearn import *
 
 
-print("///////////////TP-2Partie 2")
+print("///////////////TP-2Partie 2\n\n")
+print("////Donées factices\n")
 
 
 #Chargement des données
@@ -35,23 +36,23 @@ X_predit = prediction(modeleX,X)
 X_0_predit = prediction(modeleX_0,X_0)
 X_1_predit = prediction(modeleX_1,X_1)
 
-"""
+
 print("\nVecteur de ponderation :\n", vecteurPonderation)
 print("\nErreur de regression lineaire skl selon la premiere coordonnée :")
-graphRegLin(X_0,Y, a=-3,b=3, Tout = True)
+#graphRegLin(X_0,Y, a=-3,b=3, Tout = True)
 print(erreurSkl(Y,X_0_predit))
 print("\nErreur de regression lineaire skl selon la seconde coordonnée :")
-graphRegLin(X_1,Y, a=-3,b=3, Tout = True)
+#graphRegLin(X_1,Y, a=-3,b=3, Tout = True)
 print(erreurSkl(Y,X_1_predit))
 print("\nErreur de regression lineaire skl selon les 2 coordonnées :")
-graphRegLin(X,Y, Tout = True)
+#graphRegLin(X,Y, Tout = True)
 print(erreurSkl(Y,X_predit))
-"""
+
 
 """ boston et diabetes """
 
 #Import des données diabetes
-print("Import des données diabetes")
+print("\nImport des données diabetes")
 donnees_diabetes, etiquettes_reelles_diabetes = sklearn.datasets.load_diabetes(return_X_y=True)
 
 #Import des données boston
@@ -71,10 +72,45 @@ modele_boston.fit(donnees_boston,etiquettes_reelles_boston)
 #Prediction suivant les modeles
 print("Prediction suivant les modeles")
 predit_diabetes = prediction(modele_diabetes,donnees_diabetes)
-predit_diabetes = prediction(modele_diabetes,donnees_diabetes)
+predit_boston = prediction(modele_boston,donnees_boston)
 
-
+#Prediction suivant les modeles
+print("Prediction suivant les modeles\n\n")
 predit_diabetes = prediction(modele_diabetes,donnees_diabetes)
 predit_boston = prediction(modele_boston,donnees_boston)
 
+erreur_globale_boston = erreurSkl(etiquettes_reelles_boston,predit_boston)
+erreur_globale_diabetes = erreurSkl(etiquettes_reelles_diabetes,predit_diabetes)
 
+print("////Analyse de boston\n")
+
+for colonne in range(0,donnees_boston.shape[1]):
+    mod = linear_model.LinearRegression()
+    data = donnees_boston[:,colonne:colonne+1]
+    mod.fit(data, etiquettes_reelles_boston)
+    pred = mod.predict(data)
+    erreur = erreurSkl(etiquettes_reelles_boston,pred)
+
+    print("Suivant le parametre ", colonne, " l'erreur vaut ", erreur)
+    pass
+
+print("\nSuivant tous les parametres l'erreur pour boston vaut ", erreur_globale_boston, ".\n\n")
+
+
+print("////Analyse de diabetes\n")
+
+for colonne in range(0,donnees_diabetes.shape[1]):
+    mod = linear_model.LinearRegression()
+    data = donnees_diabetes[:,colonne:colonne+1]
+    mod.fit(data, etiquettes_reelles_diabetes)
+    pred = mod.predict(data)
+    erreur = erreurSkl(etiquettes_reelles_diabetes,pred)
+
+    print("Suivant le parametre ", colonne, " l'erreur vaut ", erreur)
+    pass
+
+print("\nSuivant tous les parametres l'erreur pour diabetes vaut ", erreur_globale_diabetes, ".\n")
+
+print("//////////Avec Regularisation : Ridge et Lasso.\n\n")
+
+ridge_boston_1 = linear_model.Ridge(alpha = 1.0)

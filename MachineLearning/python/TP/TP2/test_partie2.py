@@ -2,12 +2,29 @@ from matplotlib.pyplot import plot
 import numpy as np
 import pylab as pl
 from sklearn import linear_model, datasets
+from sklearn.metrics import mean_squared_error
 import matplotlib.pyplot as mp
-import sklearn
-from FonctionTP_sklearn import *
 
 
-print("///////////////TP-2Partie 2")
+def prediction(model, ensemble):
+    """
+    Renvoie un ensemble de valeurs prédites pour l'ensemble donné par le model donné.
+    """
+    result = model.predict(ensemble)
+    return result
+
+def erreurSkl(valeursReelles , valeursPredites):
+    """
+    Renvoie l'erreur mse du model étant donnés un ensemble de valeurs prédites et un ensemble de valeur réelles.
+
+    """
+    result = mean_squared_error(valeursReelles , valeursPredites)
+    return result
+
+
+
+print("///////////////TP-2Partie 2\n\n")
+print("////Donées factices\n")
 
 
 #Chargement des données
@@ -52,11 +69,11 @@ print(erreurSkl(Y,X_predit))
 
 #Import des données diabetes
 print("\nImport des données diabetes")
-donnees_diabetes, etiquettes_reelles_diabetes = sklearn.datasets.load_diabetes(return_X_y=True)
+donnees_diabetes, etiquettes_reelles_diabetes = datasets.load_diabetes(return_X_y=True)
 
 #Import des données boston
 print("Import des données boston")
-donnees_boston, etiquettes_reelles_boston = sklearn.datasets.load_boston(return_X_y=True)
+donnees_boston, etiquettes_reelles_boston = datasets.load_boston(return_X_y=True)
 
 #Creation de du régresseur diabetes
 print("Entrainement du modèle diabetes")
@@ -81,7 +98,7 @@ predit_boston = prediction(modele_boston,donnees_boston)
 erreur_globale_boston = erreurSkl(etiquettes_reelles_boston,predit_boston)
 erreur_globale_diabetes = erreurSkl(etiquettes_reelles_diabetes,predit_diabetes)
 
-print("Analyse de boston\n")
+print("////Analyse de boston\n")
 
 for colonne in range(0,donnees_boston.shape[1]):
     mod = linear_model.LinearRegression()
@@ -90,13 +107,12 @@ for colonne in range(0,donnees_boston.shape[1]):
     pred = mod.predict(data)
     erreur = erreurSkl(etiquettes_reelles_boston,pred)
 
-    print("Suivant le parametre ", colonne, " l'erreur vaut ", erreur, ".")
+    print("Suivant le parametre ", colonne, " l'erreur vaut ", erreur)
     pass
 
 print("\nSuivant tous les parametres l'erreur pour boston vaut ", erreur_globale_boston, ".\n\n")
 
-
-print("Analyse de diabetes\n")
+print("////Analyse de diabetes\n")
 
 for colonne in range(0,donnees_diabetes.shape[1]):
     mod = linear_model.LinearRegression()
@@ -105,7 +121,61 @@ for colonne in range(0,donnees_diabetes.shape[1]):
     pred = mod.predict(data)
     erreur = erreurSkl(etiquettes_reelles_diabetes,pred)
 
-    print("Suivant le parametre ", colonne, " l'erreur vaut ", erreur, ".")
+    print("Suivant le parametre ", colonne, " l'erreur vaut ", erreur)
     pass
 
 print("\nSuivant tous les parametres l'erreur pour diabetes vaut ", erreur_globale_diabetes, ".\n")
+
+print("//////////Avec Regularisation : Ridge et Lasso.\n\n")
+print("////////Ridge.\n")
+print("//boston.\n")
+
+
+ridge_boston_1 = linear_model.Ridge(alpha = 1.0)
+ridge_boston_1.fit(donnees_boston, etiquettes_reelles_boston)
+pred_ridge_boston_1 = ridge_boston_1.predict(donnees_boston)
+erreur_ridge_boston_1 = erreurSkl(etiquettes_reelles_boston,pred_ridge_boston_1)
+
+print("Pour boston, Ridge avec alpha = 1 l'erreur est de ", erreur_ridge_boston_1, ".\n")
+
+
+print("//diabetes.\n")
+
+
+ridge_diabetes_1 = linear_model.Ridge(alpha = 1.0)
+ridge_diabetes_1.fit(donnees_diabetes, etiquettes_reelles_diabetes)
+pred_ridge_diabetes_1 = ridge_diabetes_1.predict(donnees_diabetes)
+erreur_ridge_diabetes_1 = erreurSkl(etiquettes_reelles_diabetes,pred_ridge_diabetes_1)
+
+print("Pour diabetes, Ridge avec alpha = 1 l'erreur est de ", erreur_ridge_diabetes_1, ".\n")
+
+
+
+
+
+print("////////Lasso.\n")
+print("//boston.\n")
+
+
+Lasso_boston_1 = linear_model.Lasso(alpha = 1.0)
+Lasso_boston_1.fit(donnees_boston, etiquettes_reelles_boston)
+pred_Lasso_boston_1 = Lasso_boston_1.predict(donnees_boston)
+erreur_Lasso_boston_1 = erreurSkl(etiquettes_reelles_boston,pred_Lasso_boston_1)
+
+print("Pour boston, Lasso avec alpha = 1 l'erreur est de ", erreur_Lasso_boston_1, ".\n")
+
+
+print("//diabetes.\n")
+
+
+Lasso_diabetes_1 = linear_model.Lasso(alpha = 1.0)
+Lasso_diabetes_1.fit(donnees_diabetes, etiquettes_reelles_diabetes)
+pred_Lasso_diabetes_1 = Lasso_diabetes_1.predict(donnees_diabetes)
+erreur_Lasso_diabetes_1 = erreurSkl(etiquettes_reelles_diabetes,pred_Lasso_diabetes_1)
+
+print("Pour diabetes, Lasso avec alpha = 1 l'erreur est de ", erreur_Lasso_diabetes_1, ".\n")
+
+
+
+
+
