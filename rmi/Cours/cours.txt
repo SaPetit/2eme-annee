@@ -18,4 +18,38 @@ Etapes :
 4 - Le thread effectue le calcul.
 5 - Le thread envoie le résultat en appelant la méthode "transmettre" sur "recepteur" coté client.
 6 - Fin de la méthode transmettre, fin du thread.
-           
+
+
+
+
+Un systeme répartie, réseau d'entités calculantes ayant poour but d'effecctuer une tache globale
+à laquelle chacune participe par ses calculs et sa comunication.
+
+Représentation par un graph dont les noeux/sites/processus sont les entités,
+les arcs/arretes du graph sont les liens de communication unidirectionels/bidirectionels.
+
+Les sites peuvent etre annonimes (les sites ne se connaissent pas etre eux), dans se cas là,
+les sommets du graph ne sont pas nommés
+Non annonimes : identifiant des sites possedent une relation d'ordre. (ent general, des entiers ou des string)
+
+Unnicité du code ? chaque site execute le même code, il sont à la fois client et serveur. (On parle de système uniforme.)
+
+S'il n'y a qu'un seul site avec un code different des autres on parle de système semi-uniforme.
+
+Système synchrone : Dans un système synchrone, le fonctionnement globale est organisé par phases,
+à la fin de chaque phase, les sites s'attendent avant de passer à la phase suivante.
+
+Les canaux de communication peuvent être Fisrt In, Fisrt Out (FIFO) ou non
+
+Remarque : ce sont les communications qui apporte de la synchronisation dans les systemes asynchrones.
+
+
+Dans notre cas : systemes non-anonymes.
+                 systemes bidirectionels
+                 systèmes uniformes
+                 systemes asynchrones
+                 communications synchrones (TCP)
+                 communications FIFO
+
+Algo répartie
+
