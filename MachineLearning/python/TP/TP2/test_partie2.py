@@ -3,7 +3,7 @@ import numpy as np
 import pylab as pl
 from sklearn import linear_model, datasets
 from sklearn.metrics import mean_squared_error
-from sklearn.model_selection import GridSearchCV
+from sklearn.model_selection import GridSearchCV, train_test_split
 import matplotlib.pyplot as mp
 
 __ARRONDIE__ = 2 #Variable globale qui determine à combien les valeur affichées sont arrondies, on n'arrondie pas les valeurs dans les calculs.
@@ -33,6 +33,29 @@ def vecteurPond(modele):
 def arrondie(a):
     result = np.round(a, decimals=__ARRONDIE__)
     return result
+
+
+def ridgeLasso(donnees, etiquettes, plage_debut, plage_fin, nb_de_valeurs):
+    alphas = np.logspace(plage_debut, plage_fin, nb_de_valeurs)
+    for Model in [linear_model.Ridge, linear_model.Lasso]:
+        gscv = GridSearchCV(Model(), dict(alpha=alphas), cv=5).fit(donnees, etiquettes)
+
+        best_model = Model(alpha = gscv.best_params_.get("alpha"))
+        best_model.fit(donnees, etiquettes)
+        pred_best_model = best_model.predict(donnees)
+        erreur_best_model = erreurSkl(etiquettes,pred_best_model)
+        print(Model.__name__, gscv.best_params_, " score ", erreur_best_model)
+
+def ridgeLassoAvecSplit(donnees_train, etiquettes_train, donnees_test, etiquettes_test, plage_debut, plage_fin, nb_de_valeurs):
+    alphas = np.logspace(plage_debut, plage_fin, nb_de_valeurs)
+    for Model in [linear_model.Ridge, linear_model.Lasso]:
+        gscv = GridSearchCV(Model(), dict(alpha=alphas), cv=5).fit(donnees_train, etiquettes_train)
+
+        best_model = Model(alpha = gscv.best_params_.get("alpha"))
+        best_model.fit(donnees_train, etiquettes_train)
+        pred_best_model = best_model.predict(donnees_test)
+        erreur_best_model = erreurSkl(etiquettes_test,pred_best_model)
+        print(Model.__name__, gscv.best_params_, " score ", erreur_best_model)
 
 
 
@@ -173,7 +196,7 @@ print("Pour diabetes, Ridge avec alpha = 1 l'erreur est de ", arrondie(erreur_ri
 
 
 
-print("////////Lasso.\n")
+print("\n////////Lasso.\n")
 print("//boston.\n")
 
 
@@ -201,15 +224,33 @@ print("\nConclision : Avec alpha = 1 Ridge et Lasso sont moins bons qu'une régr
 "Beacoup de zéros dans le vecteur de ponderation avec Lasso.\n" +
 "Nous allons tenter de trouver un meilleur hyperparamètre par validation croisé.\n\n")
 
-alphas = np.logspace(-5, 1, 100)
-print("Meilleur résultats pour diabetes :",)
-for Model in [linear_model.Ridge, linear_model.Lasso]:
-    gscv = GridSearchCV(Model(), dict(alpha=alphas), cv=5).fit(donnees_diabetes, etiquettes_reelles_diabetes)
-    print(Model.__name__, gscv.best_params_)
+print("Regulation ridge et lasso pour boston.\n")
 
-print("\nMeilleur résultats pour boston :")
-alphas = np.logspace(-5, 1.6, 100)
-for Model in [linear_model.Ridge, linear_model.Lasso]:
-    gscv = GridSearchCV(Model(), dict(alpha=alphas), cv=5).fit(donnees_boston, etiquettes_reelles_boston)
-    print(Model.__name__, gscv.best_params_)
-print("\n\nListe des alphas testés :\n",alphas, "\n\n")
+ridgeLasso(donnees_boston, etiquettes_reelles_boston, -5,1,200)
+
+print("\n\n")
+print("Regulation ridge et lasso pour diabetes.\n")
+
+ridgeLasso(donnees_diabetes, etiquettes_reelles_diabetes,-5,1,200)
+
+#print("\n\nListe des alphas testés :\n",alphas, "\n\n")
+
+print("\nConclision : Avec une régulation Ridge ou lasso l'erreur est legerement moins bonne mais elles permettent un compromis entre erreur et complexité du modèle\n")
+
+### Séparation entre ensemble d'entrainement et ensemble de test
+
+print("Séparation entre ensemble d'entrainement et ensemble de test\n")
+
+
+donnees_train_boston, donnees_test_boston, etiquette_train_boston, etiquette_test_boston, = train_test_split(donnees_boston, etiquettes_reelles_boston, test_size=0.33, random_state=42)
+
+donnees_train_diabetes, donnees_test_diabetes, etiquette_train_diabetes, etiquette_test_diabetes, = train_test_split(donnees_diabetes, etiquettes_reelles_diabetes, test_size=0.33, random_state=42)
+
+print("Regulation ridge et lasso pour boston avec split.\n")
+
+ridgeLassoAvecSplit(donnees_train_boston, etiquette_train_boston, donnees_test_boston,etiquette_test_boston, -5,1,200)
+
+print("\n\n")
+print("Regulation ridge et lasso pour diabetes avec split.\n")
+
+ridgeLassoAvecSplit(donnees_train_diabetes, etiquette_train_diabetes, donnees_test_diabetes, etiquette_test_diabetes,-5,1,200)

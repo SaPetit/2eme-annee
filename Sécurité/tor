@@ -1,0 +1,16 @@
+TOR
+onion routing
+    PLUS QUE CONFIDENTIENL, ANNONYME
+        On ne veut même pas svoir que Alice parle à bob
+    On part du principe que les clés sont échangées
+
+
+Comment ça marche ?
+    Determination du circuit
+    Chiffrement
+        Aes
+        Partage de clé en Diffie Elmann
+
+Attaques contre TOR
+    Analyse de traffic
+    Fingerprinting 

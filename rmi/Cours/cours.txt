@@ -53,3 +53,19 @@ Dans notre cas : systemes non-anonymes.
 
 Algo répartie
 
+critères d'efficassité
+    complexité en temps
+    complexité en espace
+    complexité en messages
+
+Stratégie générale :
+    Contrainte sur la topologie du réseau. (anneaux, arbre,...)
+        => Contrainte sur la propagation des messages.
+    Contrainte en introduisant un ordre des événements (émission d'un message, reception, calcul local)
+        Grace à cet ordre, on peut comparer deux evenements se produisant sur des sites differents.
+        On définit des horloge logiques. (horloge entière appellées aussi horloge de Lamport)
+
+
+Horloge de lamport :
+
+    
