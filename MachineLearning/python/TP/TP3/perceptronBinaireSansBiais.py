@@ -1,5 +1,5 @@
 #Import de bibliothèques
-from re import S
+# from re import S
 import numpy as np
 import sklearn as sk
 import pylab as pl
@@ -19,7 +19,7 @@ erreurs = True
 S = np.zeros(L*(d+1)).reshape(L,d+1)
 W = np.zeros(d).reshape(d,1)
 
-X = S[:,0:d-2]
+X = S[:,0:d-1]
 Y = S[-1]
 # 2. Répéter
 while erreurs == True:
@@ -37,4 +37,3 @@ while erreurs == True:
     pass # 8.Jusqu'à ce que tous les exemples soient bien classé.
 #Renvoyer w
 print(W)
-
