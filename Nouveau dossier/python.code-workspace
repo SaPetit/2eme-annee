@@ -1,0 +1,27 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "..\\MachineLearning"
+		}
+	],
+	"settings": {
+		"python.pythonPath": "C:\\Users\\chup_\\anaconda3\\python.exe"
+	},
+	"launch": {
+		"version": "0.2.0",
+		"configurations": [
+			
+
+			{
+				"name": "Python : Fichier actuel",
+				"type": "python",
+				"request": "launch",
+				"program": "${file}",
+				"console": "integratedTerminal"
+			}
+		]
+	}
+}

@@ -34,10 +34,32 @@ def generateData2(n):
     X = data[:, 0:2]
     Y = data[:, -1]
     return X, Y
-     
+
+def generateData3(n):  #La fonction à été légèrement réécrite pour que les retours aient la meme forme que les les 2 autres generateData
+                       #
+    """
+    generates a non linearly separable dataset with about 2n samples.
+    The third element of the sample is the label
+    """
+    xb = (rand(n) * 2 - 1) / 2
+    yb = (rand(n) * 2 - 1) / 2 # (xb, yb) est dans le carre centre a l'origine de c^ote 1
+    xr = 3 * (rand(4 * n) * 2 - 1) / 2
+    yr = 3 * (rand(4 * n) * 2 - 1) / 2 # (xb, yb) est dans le carre centre a l'origine de c^ote 3
+    inputs = []
+    for i in range(n):
+        inputs.append([xb[i],yb[i],-1])
+    for i in range(4 * n):
+    # on ne conserve que les points exterieurs au carre centre a l'origine de c^ote 2
+        if abs(xr[i]) >= 1 or abs(yr[i]) >= 1:
+            inputs.append([xr[i],yr[i],1])
+    data = np.array(inputs)
+    X = data[:, 0:2]
+    Y = data[:, -1]
+    return X, Y
+        
 
 def scatter2d(X,Y):
-    """
+    """ 
     Representation graphique de la régression linéaire avec biais.
     ensemble de données x de valeurs y
     a et b : abscisses min et max du segment représentant l'approximation affine.
@@ -51,9 +73,6 @@ def scatter2d(X,Y):
 
 #Import de bibliothèques
 # from re import S
-import numpy as np
-import sklearn as sk
-import pylab as pl
 
 def hyperplanSansBiais(donnees_Etiquetees):
     #Entrée : une liste de données d'apprentissage de données à d paramètres étiquettées de façon binaire.

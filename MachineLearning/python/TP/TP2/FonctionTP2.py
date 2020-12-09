@@ -72,7 +72,7 @@ def regLin(x,y):
     Regression Linéaire avec biais.
     ensemble de données x de valeurs y
     """
-    x = np.c_[x,np.ones(x.shape[0])]
+    x = np.c_[x,np.ones(x.shape[0])] #ajout d'une colonne de 1.
     xt = np.transpose(x)
     xtx = np.dot(xt,x)
     inv = np.linalg.inv(xtx)
