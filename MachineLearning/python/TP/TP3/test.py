@@ -23,20 +23,20 @@ def generateData(n):
 
 
 
-# x,y = generateData2(400)
-# scatter2d(x,y)
-# print(np.c_[x,y])
-# W = hyperplanSansBiais(np.c_[x,y])
-# print(W[0]*W[1])
-# print(W[0]/W[1])
-# t = np.linspace(-1, 1, 20)
-# pl.plot(t, -(W[0]/W[1])*t, color = 'green')
-# pl.show()
-
-
-x,y = generateData2(500)
-print(x,y)
-print("\n\n")
+x,y = generateData2(12)
 scatter2d(x,y)
+print(np.c_[x,y])
+W = hyperplanSansBiais(np.c_[x,y])
+print(W[0]*W[1])
+print(W[0]/W[1])
 t = np.linspace(-1, 1, 20)
+pl.plot(t, -(W[0]/W[1])*t, color = 'green')
 pl.show()
+
+
+# x,y = generateData2(500)
+# print(x,y)
+# print("\n\n")
+# scatter2d(x,y)
+# t = np.linspace(-1, 1, 20)
+# pl.show()
