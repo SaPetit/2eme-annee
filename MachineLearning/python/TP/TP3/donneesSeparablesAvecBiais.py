@@ -8,10 +8,10 @@ from fonctionsTp3 import *
 
 """ Les fonctions utilisées sont définies dans le fichier fonctionTp3.py"""
 
-x,y = generateData2(20)
+x,y = generateData2(200)
 scatter2d(x,y)
 
-""" On complète les données avec un 1"""
+""" On complète les données avec une collone de 1 afin de pouvoir gerer le biais et obtenir un hyperplan (ici une drssoite) affine"""
 x = np.c_[x,np.ones(x.shape[0])]
 
 W = hyperplanSansBiais(np.c_[x,y])
