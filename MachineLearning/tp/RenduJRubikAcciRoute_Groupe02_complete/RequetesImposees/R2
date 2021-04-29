@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<RubikMdx>
+  select Crossjoin({[Measures].[SUM of MAccident.accident_id]}, {[Cause.Cause].[All Cause.Causes].[Non respect priorité a droite], [Cause.Cause].[All Cause.Causes].[Non respect priorité a droite (avec feux clignotant)], [Cause.Cause].[All Cause.Causes].[Non respect priorité de face], [Cause.Cause].[All Cause.Causes].[Non respect du piéton en carrefour]}) ON COLUMNS,
+  Crossjoin([Lieu.Lieu].[Region].Members, {[Date.Date].[All Date.Dates].[2015].Children}) ON ROWS
+from [cubeacciroute1]
+  <Alias />
+  <RubikConnection>
+    <DataSourceInfo>JdbcDrivers=org.postgresql.Driver; Jdbc=jdbc:postgresql://localhost:5433/postgres; JdbcUser=postgres; JdbcPassword=NthPWswamp; Provider=Mondrian; Catalog=file:data/resources/catalogs/CubeAcciRoute1.xml; PoolNeeded=false</DataSourceInfo>
+  </RubikConnection>
+</RubikMdx>
+

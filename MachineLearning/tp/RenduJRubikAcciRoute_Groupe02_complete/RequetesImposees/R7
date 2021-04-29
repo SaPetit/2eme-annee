@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<RubikMdx>
+  select {[Measures].[SUM of MAccident.accident_id]} ON COLUMNS,
+  Crossjoin({[Intemperie.Intemperie].[Libelle intemperie].Members}, {[Luminosite.Luminosite].[Libelle luminosite].Members}) ON ROWS
+from [cubeacciroute1]
+where [Lieu.Lieu].[All Lieu.Lieus].[AUVERGNE RHONE ALPES]
+  <Alias />
+  <RubikConnection>
+    <DataSourceInfo>JdbcDrivers=org.postgresql.Driver; Jdbc=jdbc:postgresql://localhost:5433/postgres; JdbcUser=postgres; JdbcPassword=NthPWswamp; Provider=Mondrian; Catalog=file:data/resources/catalogs/CubeAcciRoute1.xml; PoolNeeded=false</DataSourceInfo>
+  </RubikConnection>
+</RubikMdx>
+

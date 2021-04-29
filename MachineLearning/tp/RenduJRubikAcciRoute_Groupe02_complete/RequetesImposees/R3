@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<RubikMdx>
+  select {[Measures].[SUM of MAccident.nb_blesses_graves]} ON COLUMNS,
+  TopCount(Crossjoin({[Lieu.Lieu].[Commune].Members, [Lieu.Lieu].[All Lieu.Lieus].[PROVENCE ALPES COTE D'AZUR].[BOUCHES DU RHONE]}, {[Date.Date].[All Date.Dates].[2015].Children}), 100.0) ON ROWS
+from [cubeacciroute1]
+  <Alias />
+  <RubikConnection>
+    <DataSourceInfo>JdbcDrivers=org.postgresql.Driver; Jdbc=jdbc:postgresql://localhost:5433/postgres; JdbcUser=postgres; JdbcPassword=NthPWswamp; Provider=Mondrian; Catalog=file:data/resources/catalogs/CubeAcciRoute1.xml; PoolNeeded=false</DataSourceInfo>
+  </RubikConnection>
+</RubikMdx>
+

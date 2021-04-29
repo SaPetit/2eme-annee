@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Schema name="cubeacciroute0">
+    <Cube name="cubeacciroute0">
+        <Table name="maccident"/>
+             
+        <Dimension type="StandardDimension" name="Lieu" visible="true" highCardinality="true" foreignKey="lieu_id">
+            <Hierarchy name="Lieu" hasAll="true" primaryKey="lieu_id">
+                <Table name="mlieu"/>
+                <Level name="Region" table="mlieu" column="libelle_region" uniqueMembers="true"/>
+            </Hierarchy>
+        </Dimension>
+        <Dimension type="StandardDimension" name="Date" visible="true" highCardinality="true" foreignKey="date_id">
+            <Hierarchy name="Date" hasAll="true" primaryKey="date_id">
+                <Table name="mdate"/>
+                <Level name="annee" table="mdate" column="annee" uniqueMembers="false"/>
+                <Level name="mois" table="mdate" column="mois" uniqueMembers="false"/>
+            </Hierarchy>
+        </Dimension>
+        <Dimension type="StandardDimension" name="Cause" visible="true" highCardinality="false" foreignKey="cause_id">
+            <Hierarchy name="Cause" hasAll="true"  primaryKey="cause_id">
+                <Table name="mcause"/>
+                <Level name="Libelle cause" table="mcause" column="libelle_cause" uniqueMembers="false"/>
+            </Hierarchy>
+        </Dimension>
+        
+	<Measure name="SUM of MAccident.accident_id" column="accident_id" aggregator="count" formatString="Standard"/>
+        <Measure name="SUM of MAccident.nb_blesses_graves" column="nb_blesses_graves" aggregator="sum" formatString="Standard"/>
+        <Measure name="SUM of MAccident.nb_blesses_legers" column="nb_blesses_legers" aggregator="sum"  formatString="Standard"/>
+        <Measure name="SUM of MAccident.nb_indemnes" column="nb_indemnes" aggregator="sum"  formatString="Standard"/>
+    </Cube>
+</Schema>

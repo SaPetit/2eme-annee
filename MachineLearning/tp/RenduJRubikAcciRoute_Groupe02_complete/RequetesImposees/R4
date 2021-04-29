@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<RubikMdx>
+  with member [Measures].[total_blesses] as '([Measures].[SUM of MAccident.nb_blesses_graves] + [Measures].[SUM of MAccident.nb_blesses_legers])'
+select {[Measures].[total_blesses], [Measures].[SUM of MAccident.nb_blesses_graves], [Measures].[SUM of MAccident.nb_blesses_legers]} ON COLUMNS,
+  TopCount(Order({[Lieu.Lieu].[All Lieu.Lieus].[AUVERGNE RHONE ALPES].[SAVOIE].Children}, [Measures].[total_blesses], DESC), 20.0) ON ROWS
+from [cubeacciroute1]
+  <Alias />
+  <RubikConnection>
+    <DataSourceInfo>JdbcDrivers=org.postgresql.Driver; Jdbc=jdbc:postgresql://localhost:5433/postgres; JdbcUser=postgres; JdbcPassword=NthPWswamp; Provider=Mondrian; Catalog=file:data/resources/catalogs/CubeAcciRoute1.xml; PoolNeeded=false</DataSourceInfo>
+  </RubikConnection>
+</RubikMdx>
+

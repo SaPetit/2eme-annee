@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Schema name="cubeacciroute1">
+    <Cube name="cubeacciroute1">
+        <Table name="maccident"/>
+             
+        <Dimension type="StandardDimension" name="Lieu" visible="true" highCardinality="true" foreignKey="lieu_id">
+            <Hierarchy name="Lieu" hasAll="true" primaryKey="lieu_id">
+                <Table name="mlieu"/>
+                <Level name="Region" table="mlieu" column="libelle_region" uniqueMembers="true"/>
+				<Level name="Departement" table="mlieu" column="libelle_dept" uniqueMembers="true"/>
+				<Level name="Commune" table="mlieu" column="libelle_com" uniqueMembers="true"/>
+            </Hierarchy>
+        </Dimension>
+		
+        <Dimension type="StandardDimension" name="Date" visible="true" highCardinality="true" foreignKey="date_id">
+            <Hierarchy name="Date" hasAll="true" primaryKey="date_id">
+                <Table name="mdate"/>
+                <Level name="annee" table="mdate" column="annee" uniqueMembers="true"/>
+                <Level name="mois" table="mdate" column="mois" uniqueMembers="false"/>
+				<Level name="jour" table="mdate" column="jour" uniqueMembers="false"/>
+                <Level name="heure" table="mdate" column="hh" uniqueMembers="false"/>
+				<Level name="minute" table="mdate" column="mm" uniqueMembers="false"/>
+            </Hierarchy>
+        </Dimension>
+		
+        <Dimension type="StandardDimension" name="Cause" visible="true" highCardinality="false" foreignKey="cause_id">
+            <Hierarchy name="Cause" hasAll="true"  primaryKey="cause_id">
+                <Table name="mcause"/>
+                <Level name="Libelle cause" table="mcause" column="libelle_cause" uniqueMembers="true"/>
+            </Hierarchy>
+        </Dimension>
+		
+        <Dimension type="StandardDimension" name="Intemperie" visible="true" highCardinality="false" foreignKey="intemp_id">
+            <Hierarchy name="Intemperie" hasAll="true"  primaryKey="intemp_id">
+                <Table name="mintemperie"/>
+                <Level name="Libelle intemperie" table="mintemperie" column="libelle_intemp" uniqueMembers="true"/>
+            </Hierarchy>
+        </Dimension>
+		
+        <Dimension type="StandardDimension" name="Surface" visible="true" highCardinality="false" foreignKey="etatsurface_id">
+            <Hierarchy name="Surface" hasAll="true"  primaryKey="etatsurface_id">
+                <Table name="metatsurface"/>
+				<Level name="Type etat surface" table="metatsurface" column="libelle_type_etatsurface" uniqueMembers="true"/>
+                <Level name="Libelle etat surface" table="metatsurface" column="libelle_etatsurface" uniqueMembers="true"/>
+            </Hierarchy>
+        </Dimension>	
+
+        <Dimension type="StandardDimension" name="Implique" visible="true" highCardinality="false" foreignKey="impliq_id">
+            <Hierarchy name="Surface" hasAll="true"  primaryKey="impliq_id">
+                <Table name="mimplique"/>
+				<Level name="Type usagers impliques" table="mimplique" column="libelle_type_impliq" uniqueMembers="true"/>
+                <Level name="Libelle usagers impliques" table="mimplique" column="libelle_impliq" uniqueMembers="true"/>
+            </Hierarchy>
+        </Dimension>	
+
+        <Dimension type="StandardDimension" name="Luminosite" visible="true" highCardinality="false" foreignKey="lum_id">
+            <Hierarchy name="Luminosite" hasAll="true"  primaryKey="lum_id">
+                <Table name="mluminosite"/>
+				<Level name="Type luminosite" table="mluminosite" column="libelle_type_lum" uniqueMembers="true"/>
+                <Level name="Libelle luminosite" table="mluminosite" column="libelle_lum" uniqueMembers="true"/>
+            </Hierarchy>
+        </Dimension>
+		
+		<Dimension type="StandardDimension" name="Gravite" visible="true" highCardinality="false" foreignKey="gravite">
+			<Hierarchy name="Gravite" hasAll="true" primaryKey="gravite">
+				<Table name="maccident"/>
+				<Level name="gravite" table="maccident" column="gravite" uniqueMembers="true"/>
+			</Hierarchy>
+        </Dimension>
+		
+	<Measure name="SUM of MAccident.accident_id" column="accident_id" aggregator="count" formatString="Standard"/>
+	<Measure name="SUM of MAccident.nb_blesses_graves" column="nb_blesses_graves" aggregator="sum" formatString="Standard"/>
+	<Measure name="SUM of MAccident.nb_blesses_legers" column="nb_blesses_legers" aggregator="sum" formatString="Standard"/>
+	<Measure name="SUM of MAccident.nb_indemnes" column="nb_indemnes" aggregator="sum" formatString="Standard"/>
+
+	</Cube>
+</Schema>

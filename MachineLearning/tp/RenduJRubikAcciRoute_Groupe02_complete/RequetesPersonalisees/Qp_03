@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<RubikMdx>
+  with member [Measures].[total_blesses] as '([Measures].[SUM of MAccident.nb_blesses_graves] + [Measures].[SUM of MAccident.nb_blesses_legers])'
+  member [Measures].[accidents avec blessés (somme)] as '[Measures].[SUM of MAccident.accident_id]'
+select {Filter({[Measures].[accidents avec blessés (somme)]}, ([Measures].[total_blesses] &gt; 0.0)), {[Measures].[SUM of MAccident.nb_blesses_legers]}} ON COLUMNS,
+  TopCount(Order({[Lieu.Lieu].[Departement].Members}, [Measures].[SUM of MAccident.accident_id], DESC), 5.0) ON ROWS
+from [cubeacciroute1]
+  <Alias />
+  <RubikConnection>
+    <DataSourceInfo>JdbcDrivers=org.postgresql.Driver; Jdbc=jdbc:postgresql://localhost:5433/postgres; JdbcUser=postgres; JdbcPassword=NthPWswamp; Provider=Mondrian; Catalog=file:data/resources/catalogs/CubeAcciRoute1.xml; PoolNeeded=false</DataSourceInfo>
+  </RubikConnection>
+</RubikMdx>
+
